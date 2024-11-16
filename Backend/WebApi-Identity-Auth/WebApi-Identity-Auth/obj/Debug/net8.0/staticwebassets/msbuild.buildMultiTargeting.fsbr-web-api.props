@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\fsbr-web-api.props" />
+</Project>

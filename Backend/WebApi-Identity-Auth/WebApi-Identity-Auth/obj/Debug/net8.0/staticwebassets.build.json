@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "YoaZ6RH0Ms6c7VqauE6Za2d1nKvH1HqzS4O/jzooq3I=",
+  "Source": "fsbr-web-api",
+  "BasePath": "_content/fsbr-web-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
