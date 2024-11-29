@@ -4,6 +4,6 @@ namespace WebApi_Identity_Auth.Database
 {
     public class User : IdentityUser
     {
-        public string? Initials { get; set; }
+        public DateOnly? BirthDate{ get; set; }
     }
 }

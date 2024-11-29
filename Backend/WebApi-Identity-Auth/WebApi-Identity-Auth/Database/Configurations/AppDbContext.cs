@@ -17,7 +17,14 @@ namespace WebApi_Identity_Auth.Database.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>().Property(u => u.Initials).HasMaxLength(5);
+            base.OnModelCreating(builder);
+
+            builder.Entity<User>(u =>
+            {
+                u.Property(us => us.UserName).IsRequired(true);
+                u.Property(us => us.Email).IsRequired(true);
+                u.Property(us => us.BirthDate);
+            });
 
             builder.HasDefaultSchema("identity");
 
@@ -33,7 +40,6 @@ namespace WebApi_Identity_Auth.Database.Persistence
 
             builder.Entity<Category>(e => e.HasKey(c => c.Id));
             
-            base.OnModelCreating(builder);
         }
     }
 }
