@@ -1,12 +1,8 @@
-import { Breadcrumb, Layout, Menu, theme  } from 'antd';
+import { Layout, Menu, theme  } from 'antd';
 import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
-
-const items = new Array(2).fill(null).map((_, index) => ({
-    key: index + 1,
-    label: `nav ${index + 1}`,
-  }));
 
 const CustomLayout: React.FC = () => {
     const {
@@ -19,28 +15,43 @@ const CustomLayout: React.FC = () => {
                     <Menu
                         theme='dark'
                         mode='horizontal'
-                        defaultSelectedKeys={['2']}
-                        items={items}
+                        defaultSelectedKeys={['1']}
                         style={{ flex: 1, minWidth: 0 }}
-                    />
+                    >
+                        <Menu.Item key="0">
+                            <NavLink to='/'>Home</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="1">
+                            <NavLink to='/products'>Produtos</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <NavLink to='/categories'>Categorias</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="3">
+                            <NavLink to=''>Logout</NavLink> {/*TODO: ajustar para ser botao de logout*/}
+                        </Menu.Item>
+                    </Menu>
                 </Header>
-                <Content style={{ padding: '0 48px' }}>
-                    <Breadcrumb style={{ margin: '16px 0'}}>
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>List</Breadcrumb.Item>
-                        <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
+                <Content style={{ 
+                        padding: '0 48px', 
+                        // backgroundColor: 'yellowgreen', 
+                        height: '90vh',
+                    }}>
+                    
                     <div style={{
                         background: colorBgContainer,
-                        minHeight: 280,
+                        // minHeight: 380,
+                        // height: '80vh',
                         padding: 24,
                         borderRadius: borderRadiusLG,
+                        marginTop: 16,
+
                     }}>
-                        My content
+                        <Outlet />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    Ant Design @{new Date().getFullYear()} Created by Andre Arruda
+                <Footer style={{ textAlign: 'center', position: 'fixed', bottom: 0, width: '100%',  }}>
+                    Ant Design @{new Date().getFullYear()} Created by <a href='https://github.com/andrelarruda'>Andre Arruda</a>
                 </Footer>
             </Layout>
     )

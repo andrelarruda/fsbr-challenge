@@ -1,11 +1,10 @@
-import type { FormProps } from 'antd';
-import { Button, Form, Input, Typography } from 'antd'
+import { Button, Form, Input, Typography, DatePicker } from 'antd'
+import { NavLink } from 'react-router-dom';
 import { z } from 'zod'
-import { NavLink } from 'react-router-dom'
 
 const { Title } = Typography;
 
-const loginFormSchema = z.object({
+const signupFormSchema = z.object({
     email: z.string().min(1, 'O documento CPF/CNPJ é obrigatório'),
     password: z.string().min(6, 'A senha deve ter no minino 6 caracteres')
 })
@@ -13,21 +12,44 @@ const loginFormSchema = z.object({
 type FieldType = {
     email?: string;
     password?: string;
+    name: string;
+    birthdate: Date;
 };
 
-export const LoginForm = () => {
+export const SignupForm = () => {
     return (
         <Form
             name='basic'
-            layout='horizontal'
+            layout='vertical'
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 800, }}
+            style={{ width: '40vw' }}
             onFinish={ (data) => console.log(data) }
             onFinishFailed={ () => { alert('Algo deu errado.') }}
-            autoComplete='off'
+            autoComplete='on'
         >
-            <Title level={2} style={{ alignSelf: 'center' }}>Faça seu login</Title>
+            <Title level={2}>Crie a sua conta</Title>
+
+            <Form.Item<FieldType>
+                label="Nome"
+                name="name"
+                rules={[
+                    {required: true, message: 'Nome obrigatório'}, 
+                    {type: 'string', message: "Digite um nome"},
+                ]}
+                >
+                    <Input />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+                label="Data de nascimento"
+                name="birthdate"
+                rules={[
+                    {required: true, message: 'Informe a sua data de nascimento'},
+                ]}
+                >
+                    <DatePicker />
+            </Form.Item>
 
             <Form.Item<FieldType>
                 label="Email"
@@ -54,15 +76,15 @@ export const LoginForm = () => {
 
             <Form.Item label={null}>
                 <Button type="primary" htmlType="submit">
-                    Entrar
+                    Cadastrar
                 </Button>
             </Form.Item>
             {/* <Button type="link" htmlType="submit" >
                 Criar uma conta
             </Button> */}
             <Form.Item label={null}>
-                <NavLink to='/signup' end>
-                    Criar uma conta
+                <NavLink to='/login' end>
+                    Voltar
                 </NavLink>
             </Form.Item>
         </Form>
