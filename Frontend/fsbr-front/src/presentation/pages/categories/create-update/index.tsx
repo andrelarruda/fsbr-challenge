@@ -2,6 +2,7 @@ import React from 'react'
 import { Divider, Form, Flex, Typography, Input, Button, message } from 'antd'
 import { useCreateCategoryMutation } from '../../../../services/apiSlice';
 import { useNavigate } from 'react-router-dom'
+import { ShowToast, ToastType } from '../../../../utils/toast/Toast';
 
 const { Title } = Typography;
 
@@ -21,26 +22,6 @@ export default function CreateUpdateCategoryPage() {
     const [createUser] = useCreateCategoryMutation();
     const navigate = useNavigate()
 
-    const success = () => {
-        message.open({
-            type: 'success',
-            content: 'Categoria criada com sucesso.',
-            style: {
-                fontSize: 18
-            }
-        });
-    };
-
-    const error = (e: any) => {
-        message.open({
-            type: 'error',
-            content: `Erro ao criar categoria: ${e}`,
-            style: {
-                fontSize: 18
-            }
-        });
-    };
-
     return (
         <div>
             <Divider orientationMargin={0} orientation='left'>
@@ -58,12 +39,11 @@ export default function CreateUpdateCategoryPage() {
                         createUser(data)
                             .unwrap()
                             .then(() => {
-                                success()
+                                ShowToast(ToastType.SUCCESS, "Categoria criada com sucesso.")
                                 navigate('/categories')
                             })
                             .catch((e) => {
-                                console.log()
-                                error(e.data?.errors?.Description)
+                                ShowToast(ToastType.ERROR, e.data?.errors?.Description)
                             })
                     }}
                     onFinishFailed={() => { alert('Algo deu errado.') }}

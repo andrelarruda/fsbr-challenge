@@ -1,8 +1,9 @@
 import { Button, List, Skeleton, Space, Divider, Typography } from 'antd';
-import { useGetCategoriesQuery, } from '../../../../services/apiSlice';
+import { useDeleteCategoryMutation, useGetCategoriesQuery, } from '../../../../services/apiSlice';
 import React, { useEffect, useState } from 'react';
 import Icon, { DeleteFilled, DeleteOutlined, EditFilled, FileAddFilled, PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
+import { ShowToast, ToastType } from '../../../../utils/toast/Toast';
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
     <Space>
@@ -15,6 +16,7 @@ const { Title } = Typography;
 
 export default function ListCategoriesPage() {
     const { data, error, isLoading, refetch } = useGetCategoriesQuery();
+    const [ deleteCategory ] = useDeleteCategoryMutation();
     const [currentPage, setCurrentPage] = useState<number>(1)
     const navigate = useNavigate()
 
@@ -23,13 +25,15 @@ export default function ListCategoriesPage() {
     }, []);
 
     return (
-        <div className="flex h-full justify-center items-center text-white text-xl">
+        <div className="flex h-full justify-center items-center text-white text-xl" 
+            // style={{ backgroundColor: 'red' }}
+            >
             {error ? (
                 <>Erro ao listar categorias.</>
             ) : (
                 <List
                     className='demo-loadmore-list'
-                    // loading={initLoading}
+                    // style={{ backgroundColor: 'red', minHeight: '80vh'}}
                     itemLayout='horizontal'
                     dataSource={data}
                     header={
@@ -57,8 +61,16 @@ export default function ListCategoriesPage() {
                                         console.log('editing: ', item.id)
                                     }}><IconText icon={EditFilled} text="edit" key="list-vertical-star-o" /></a>,
                                     <a onClick={(event) => {
-                                        console.log('deleting: ', item.id)
-                                        refetch()
+                                        deleteCategory(item.id)
+                                            .unwrap()
+                                            .then(() => {
+                                                ShowToast(ToastType.SUCCESS, 'Categoria excluída com sucesso.')
+                                                refetch()
+                                            })
+                                            .catch((e) => {
+                                                ShowToast(ToastType.ERROR, 'Erro ao excluir categoria.')
+                                                console.log(`Erro ao deletar categoria: ${e.data?.errors?.Description}`)
+                                            })
                                     }}><IconText icon={DeleteFilled} text="delete" key="list-vertical-star-o" /></a>,
                                     // <DeleteFilled color='#ff3311' />,
                                 ]}

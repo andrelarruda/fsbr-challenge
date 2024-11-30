@@ -12,11 +12,17 @@ export const apiSlice = createApi({
         getCategoryById: builder.query<Category, number>({
             query: (id) => `/api/categories/${id}`
         }),
-        createCategory: builder.mutation({
+        createCategory: builder.mutation<void, void>({
             query: (body) => ({
                 url: 'api/categories',
                 method: 'POST',
                 body,
+            })
+        }),
+        deleteCategory: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `api/categories/${id}`,
+                method: 'DELETE',
             })
         }),
 
@@ -30,4 +36,11 @@ export const apiSlice = createApi({
     })
 });
 
-export const { useGetCategoriesQuery, useGetCategoryByIdQuery, useGetProductsQuery, useGetProductByIdQuery, useCreateCategoryMutation } = apiSlice;
+export const { 
+    useGetCategoriesQuery, 
+    useGetCategoryByIdQuery, 
+    useGetProductsQuery, 
+    useGetProductByIdQuery, 
+    useCreateCategoryMutation,
+    useDeleteCategoryMutation,
+} = apiSlice;

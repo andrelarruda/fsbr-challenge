@@ -45,7 +45,7 @@ const CustomLayout: React.FC = () => {
                         padding: 24,
                         borderRadius: borderRadiusLG,
                         marginTop: 16,
-
+                        height: '100%'
                     }}>
                         <Outlet />
                     </div>
