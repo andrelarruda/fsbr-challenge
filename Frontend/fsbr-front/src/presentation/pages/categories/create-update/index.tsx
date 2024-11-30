@@ -1,5 +1,7 @@
 import React from 'react'
-import { Divider, Form, Flex, Typography, Input, Button } from 'antd'
+import { Divider, Form, Flex, Typography, Input, Button, message } from 'antd'
+import { useCreateCategoryMutation } from '../../../../services/apiSlice';
+import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography;
 
@@ -12,10 +14,33 @@ const boxStyle: React.CSSProperties = {
 type FieldType = {
     id?: number;
     name: string;
-    category: string;
+    description: string;
 };
 
 export default function CreateUpdateCategoryPage() {
+    const [createUser] = useCreateCategoryMutation();
+    const navigate = useNavigate()
+
+    const success = () => {
+        message.open({
+            type: 'success',
+            content: 'Categoria criada com sucesso.',
+            style: {
+                fontSize: 18
+            }
+        });
+    };
+
+    const error = (e: any) => {
+        message.open({
+            type: 'error',
+            content: `Erro ao criar categoria: ${e}`,
+            style: {
+                fontSize: 18
+            }
+        });
+    };
+
     return (
         <div>
             <Divider orientationMargin={0} orientation='left'>
@@ -29,7 +54,18 @@ export default function CreateUpdateCategoryPage() {
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 800, }}
-                    onFinish={(data) => console.log(data)}
+                    onFinish={(data) => {
+                        createUser(data)
+                            .unwrap()
+                            .then(() => {
+                                success()
+                                navigate('/categories')
+                            })
+                            .catch((e) => {
+                                console.log()
+                                error(e.data?.errors?.Description)
+                            })
+                    }}
                     onFinishFailed={() => { alert('Algo deu errado.') }}
                     autoComplete='off'
                 >
@@ -44,7 +80,7 @@ export default function CreateUpdateCategoryPage() {
                         name="name"
                         rules={[
                             { required: true, message: 'Informe o título da categoria.' },
-                            { min: 4, message: "Digite no minimo 4 letras."}
+                            { min: 4, message: "Digite no minimo 4 letras." }
                         ]}
                     >
                         <Input />
@@ -52,7 +88,7 @@ export default function CreateUpdateCategoryPage() {
 
                     <Form.Item<FieldType>
                         label="Descrição"
-                        name="category"
+                        name="description"
                         rules={[
                             { required: true, message: 'Dê uma descrição para a categoria.' },
                         ]}

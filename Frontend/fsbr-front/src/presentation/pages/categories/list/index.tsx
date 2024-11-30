@@ -1,5 +1,5 @@
 import { Button, List, Skeleton, Space, Divider, Typography } from 'antd';
-import { useGetCategoriesQuery, } from '../../../../services/category.service';
+import { useGetCategoriesQuery, } from '../../../../services/apiSlice';
 import React, { useEffect, useState } from 'react';
 import Icon, { DeleteFilled, DeleteOutlined, EditFilled, FileAddFilled, PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
@@ -17,6 +17,10 @@ export default function ListCategoriesPage() {
     const { data, error, isLoading, refetch } = useGetCategoriesQuery();
     const [currentPage, setCurrentPage] = useState<number>(1)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        refetch()
+    }, []);
 
     return (
         <div className="flex h-full justify-center items-center text-white text-xl">
