@@ -48,18 +48,16 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                     style={{ maxWidth: 800, }}
                     onFinish={(data) => {
                         if(!productFormProps.isUpdate) {
-                            console.log(data)
-                            // createProduct(data)
-                            //     .unwrap()
-                            //     .then(() => {
-                            //         ShowToast(ToastType.SUCCESS, "Produto criado com sucesso.")
-                            //         navigate('/products')
-                            //     })
-                            //     .catch((e) => {
-                            //         ShowToast(ToastType.ERROR, e.data?.errors?.Description)
-                            //     })
+                            createProduct(data)
+                                .unwrap()
+                                .then(() => {
+                                    ShowToast(ToastType.SUCCESS, "Produto criado com sucesso.")
+                                    navigate('/products')
+                                })
+                                .catch((e) => {
+                                    ShowToast(ToastType.ERROR, e.data?.errors?.Description)
+                                })
                         } else {
-                            console.log(data)
                             updateProduct(data)
                                 .unwrap()
                                 .then(() => {
