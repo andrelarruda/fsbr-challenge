@@ -1,6 +1,6 @@
 import React from 'react'
 import { Product } from "../../types/Product"
-import { Divider, Form, Flex, Typography, Input, Button } from 'antd'
+import { Divider, Form, Flex, Typography, Input, InputNumber, Button } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ShowToast, ToastType } from '../../utils/toast/Toast';
 import { useCreateProductMutation, useUpdateProductMutation } from '../../services/apiSlice';
@@ -48,16 +48,18 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                     style={{ maxWidth: 800, }}
                     onFinish={(data) => {
                         if(!productFormProps.isUpdate) {
-                            createProduct(data)
-                                .unwrap()
-                                .then(() => {
-                                    ShowToast(ToastType.SUCCESS, "Produto criado com sucesso.")
-                                    navigate('/products')
-                                })
-                                .catch((e) => {
-                                    ShowToast(ToastType.ERROR, e.data?.errors?.Description)
-                                })
+                            console.log(data)
+                            // createProduct(data)
+                            //     .unwrap()
+                            //     .then(() => {
+                            //         ShowToast(ToastType.SUCCESS, "Produto criado com sucesso.")
+                            //         navigate('/products')
+                            //     })
+                            //     .catch((e) => {
+                            //         ShowToast(ToastType.ERROR, e.data?.errors?.Description)
+                            //     })
                         } else {
+                            console.log(data)
                             updateProduct(data)
                                 .unwrap()
                                 .then(() => {
@@ -143,8 +145,14 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe o preço do produto.' },
                         ]}
                     >
-                        <Input 
-                            value={productFormProps?.product?.price}
+                        <InputNumber<string> 
+                            min='0'
+                            step='0.01'
+                            value={productFormProps?.product?.price.toString()}
+                            stringMode
+                            onChange={(value) => {
+                                console.log('changed: ', parseFloat(value ?? '0'))
+                            }}
                         />
                     </Form.Item>
 
@@ -155,7 +163,8 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe a quantidade em estoque.' },
                         ]}
                     >
-                        <Input 
+                        <InputNumber 
+                            min={0}
                             value={productFormProps?.product?.stockQuantity}
                         />
                     </Form.Item>
@@ -167,7 +176,7 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe a categoria a qual pertence o produto' },
                         ]}
                     >
-                        <Input 
+                        <InputNumber 
                             value={productFormProps?.product?.categoryId}
                         />
                     </Form.Item>
