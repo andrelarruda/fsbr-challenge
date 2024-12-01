@@ -1,9 +1,10 @@
 import React from 'react'
 import { Product } from "../../types/Product"
-import { Divider, Form, Flex, Typography, Input, InputNumber, Button } from 'antd'
+import { Divider, Form, Flex, Typography, Input, InputNumber, Button, Select } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ShowToast, ToastType } from '../../utils/toast/Toast';
-import { useCreateProductMutation, useUpdateProductMutation } from '../../services/apiSlice';
+import { useCreateProductMutation, useUpdateProductMutation, useGetCategoriesQuery } from '../../services/apiSlice';
+import { Category } from '../../types/Category';
 
 const { Title } = Typography;
 
@@ -32,11 +33,20 @@ export default function ProductForm (productFormProps: ProductFormProps) {
     const navigate = useNavigate()
     const [createProduct] = useCreateProductMutation();
     const [updateProduct] = useUpdateProductMutation();
+    const { data: categories, isLoading } = useGetCategoriesQuery();
+
+    let categoriesOptions = categories?.map((c: Category) => {
+        return {
+            value: c.id,
+            label: c.name,
+        }
+    })
+
     const params = useParams()
     return (
         <div>
             <Divider orientationMargin={0} orientation='left'>
-                <Title level={3} style={{ alignSelf: 'left' }}>Criar/Atualizar Categoria</Title>
+                <Title level={3} style={{ alignSelf: 'left' }}>{ productFormProps?.isUpdate ? 'Atualizar' : 'Criar'} Produto</Title>
             </Divider>
 
             <Flex vertical={false} style={boxStyle} justify="center" align="center">
@@ -72,12 +82,12 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                     onFinishFailed={() => { alert('Algo deu errado.') }}
                     autoComplete='off'
                     initialValues={{
-                        ['id']: productFormProps?.product?.id,
-                        ['name']: productFormProps?.product?.name,
-                        ['description']: productFormProps?.product?.description,
-                        ['price']: productFormProps?.product?.price,
-                        ['stockQuantity']: productFormProps?.product?.stockQuantity,
-                        ['categoryId']: productFormProps?.product?.categoryId,
+                        id: productFormProps?.product?.id,
+                        name: productFormProps?.product?.name,
+                        description: productFormProps?.product?.description,
+                        price: productFormProps?.product?.price,
+                        stockQuantity: productFormProps?.product?.stockQuantity,
+                        categoryId: productFormProps?.product?.categoryId,
                     }}
                     fields={[
                         {
@@ -174,9 +184,15 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe a categoria a qual pertence o produto' },
                         ]}
                     >
-                        <InputNumber 
-                            value={productFormProps?.product?.categoryId}
-                        />
+                        <Select 
+                            options={categoriesOptions}
+                            loading={isLoading}
+
+                            // value={categoriesOptions?.find(o => o.value === productFormProps?.product?.categoryId)}
+                            defaultValue={productFormProps?.product?.categoryId}
+                            // value={categoriesOptions?.find(o => o.value === productFormProps?.product?.categoryId)}
+                            // defaultValue={productFormProps?.product?.categoryId}
+                            />
                     </Form.Item>
 
                     <Form.Item label={null}>
