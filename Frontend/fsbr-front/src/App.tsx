@@ -6,7 +6,8 @@ import ListCategoriesPage from './presentation/pages/categories/list'
 import SignupPage from './presentation/pages/auth/SignupPage'
 import HomePage from './presentation/pages/home'
 import ListProductsPage from './presentation/pages/products'
-import CreateUpdateCategoryPage from './presentation/pages/categories/create-update'
+import UpdateCategoryPage from './presentation/pages/categories/update'
+import CreateCategoryPage from './presentation/pages/categories/create'
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route path='' element={<HomePage />} />
           <Route path='categories'>
             <Route path='' element={<ListCategoriesPage />} />
-            <Route path='create' element={<CreateUpdateCategoryPage />} />
+            <Route path='create' element={<CreateCategoryPage />} />
+            <Route path='update/:id' element={<UpdateCategoryPage />} />
           </Route>
           <Route path='products' element={<ListProductsPage />} />
           <Route path='unauthorized' element={<UnauthorizedPage />} />

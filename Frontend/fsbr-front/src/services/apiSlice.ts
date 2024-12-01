@@ -25,6 +25,13 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             })
         }),
+        updateCategory: builder.mutation({
+            query: (body) => ({
+                url: `api/categories/${body.id}`,
+                method: 'PUT',
+                body,
+            })
+        }),
 
 
         getProducts: builder.query<Product[], void>({
@@ -43,4 +50,5 @@ export const {
     useGetProductByIdQuery, 
     useCreateCategoryMutation,
     useDeleteCategoryMutation,
+    useUpdateCategoryMutation,
 } = apiSlice;

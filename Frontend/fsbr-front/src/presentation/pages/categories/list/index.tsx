@@ -58,7 +58,7 @@ export default function ListCategoriesPage() {
                             <List.Item
                                 actions={[
                                     <a onClick={(event) => {
-                                        console.log('editing: ', item.id)
+                                        navigate(`/categories/update/${item.id}`)
                                     }}><IconText icon={EditFilled} text="edit" key="list-vertical-star-o" /></a>,
                                     <a onClick={(event) => {
                                         deleteCategory(item.id)
