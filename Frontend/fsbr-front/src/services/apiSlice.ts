@@ -40,15 +40,38 @@ export const apiSlice = createApi({
         getProductById: builder.query<Product, number>({
             query: (id) => `/api/products/${id}`
         }),
+        createProduct: builder.mutation({
+            query: (body) => ({
+                url: 'api/products',
+                method: 'POST',
+                body,
+            })
+        }),
+        deleteProduct: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `api/products/${id}`,
+                method: 'DELETE'
+            })
+        }),
+        updateProduct: builder.mutation({
+            query: (body) => ({
+                url: `api/products/${body.id}`,
+                method: 'PUT',
+                body,
+            })
+        }),
     })
 });
 
 export const { 
     useGetCategoriesQuery, 
     useGetCategoryByIdQuery, 
-    useGetProductsQuery, 
-    useGetProductByIdQuery, 
     useCreateCategoryMutation,
     useDeleteCategoryMutation,
     useUpdateCategoryMutation,
+    useGetProductsQuery, 
+    useGetProductByIdQuery, 
+    useCreateProductMutation,
+    useDeleteProductMutation,
+    useUpdateProductMutation,
 } = apiSlice;

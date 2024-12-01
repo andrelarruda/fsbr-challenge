@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ShowToast, ToastType } from '../../utils/toast/Toast';
 import { useCreateCategoryMutation, useUpdateCategoryMutation } from '../../services/apiSlice';
 import { Divider, Form, Flex, Typography, Input, Button } from 'antd'
@@ -26,8 +26,8 @@ interface CategoryFormProps {
 
 export default function CategoryForm (categoryFormProps: CategoryFormProps) {
     const navigate = useNavigate()
-    const [createUser] = useCreateCategoryMutation();
-    const [updateUser] = useUpdateCategoryMutation();
+    const [createCategory] = useCreateCategoryMutation();
+    const [updateCategory] = useUpdateCategoryMutation();
     const params = useParams()
 
     return (
@@ -45,7 +45,7 @@ export default function CategoryForm (categoryFormProps: CategoryFormProps) {
                     style={{ maxWidth: 800, }}
                     onFinish={(data) => {
                         if(!categoryFormProps.isUpdate) {
-                            createUser(data)
+                            createCategory(data)
                                 .unwrap()
                                 .then(() => {
                                     ShowToast(ToastType.SUCCESS, "Categoria criada com sucesso.")
@@ -55,7 +55,7 @@ export default function CategoryForm (categoryFormProps: CategoryFormProps) {
                                     ShowToast(ToastType.ERROR, e.data?.errors?.Description)
                                 })
                         } else {
-                            updateUser(data)
+                            updateCategory(data)
                                 .unwrap()
                                 .then(() => {
                                     ShowToast(ToastType.SUCCESS, "Categoria atualizada com sucesso.")
