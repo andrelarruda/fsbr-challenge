@@ -71,6 +71,14 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                     }}
                     onFinishFailed={() => { alert('Algo deu errado.') }}
                     autoComplete='off'
+                    initialValues={{
+                        ['id']: productFormProps?.product?.id,
+                        ['name']: productFormProps?.product?.name,
+                        ['description']: productFormProps?.product?.description,
+                        ['price']: productFormProps?.product?.price,
+                        ['stockQuantity']: productFormProps?.product?.stockQuantity,
+                        ['categoryId']: productFormProps?.product?.categoryId,
+                    }}
                     fields={[
                         {
                             name: ['id'],
@@ -101,7 +109,6 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                     <Form.Item<FieldType>
                         name="id"
                         hidden={true}
-                        initialValue={productFormProps?.product?.id}
                     >
                         <Input value={productFormProps?.product?.id} />
                     </Form.Item>
@@ -112,10 +119,8 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe o nome do produto.' },
                         ]}
                     >
-                        {/* <p style={{display: 'none'}}>{productFormProps?.category?.name}</p> */}
                         <Input type='text' 
-                            value={productFormProps?.product?.name} 
-                            defaultValue={productFormProps?.product?.name ?? ''} 
+                            value={productFormProps?.product?.name}
                             />
                     </Form.Item>
 
@@ -126,10 +131,8 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                             { required: true, message: 'Informe uma descrição para o produto.' },
                         ]}
                     >
-                        {/* <p style={{display: 'none'}}>{productFormProps?.category?.description}</p> */}
                         <Input 
-                            value={productFormProps?.product?.description} 
-                            defaultValue={productFormProps?.product?.description ?? ''} 
+                            value={productFormProps?.product?.description}
                         />
                     </Form.Item>
 
@@ -138,13 +141,10 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                         name="price"
                         rules={[
                             { required: true, message: 'Informe o preço do produto.' },
-                            // { type: 'float', message: 'Informe um valor numerico real'}
                         ]}
                     >
-                        {/* <p style={{display: 'none'}}>{productFormProps?.category?.description}</p> */}
                         <Input 
-                            value={productFormProps?.product?.price} 
-                            defaultValue={productFormProps?.product?.price ?? ''} 
+                            value={productFormProps?.product?.price}
                         />
                     </Form.Item>
 
@@ -153,13 +153,10 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                         name="stockQuantity"
                         rules={[
                             { required: true, message: 'Informe a quantidade em estoque.' },
-                            // { type: 'integer', message: 'Informe um valor inteiro'}
                         ]}
                     >
-                        {/* <p style={{display: 'none'}}>{productFormProps?.category?.description}</p> */}
                         <Input 
-                            value={productFormProps?.product?.stockQuantity} 
-                            defaultValue={productFormProps?.product?.stockQuantity ?? ''} 
+                            value={productFormProps?.product?.stockQuantity}
                         />
                     </Form.Item>
 
@@ -168,13 +165,10 @@ export default function ProductForm (productFormProps: ProductFormProps) {
                         name="categoryId"
                         rules={[
                             { required: true, message: 'Informe a categoria a qual pertence o produto' },
-                            // { type: 'float', message: 'Informe um valor numerico real'}
                         ]}
                     >
-                        {/* <p style={{display: 'none'}}>{productFormProps?.category?.description}</p> */}
                         <Input 
-                            value={productFormProps?.product?.categoryId} 
-                            defaultValue={productFormProps?.product?.categoryId ?? ''} 
+                            value={productFormProps?.product?.categoryId}
                         />
                     </Form.Item>
 
