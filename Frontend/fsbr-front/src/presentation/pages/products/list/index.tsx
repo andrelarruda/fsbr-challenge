@@ -22,7 +22,7 @@ export default function ListProductsPage() {
         <div className="flex h-full justify-center items-center text-white text-xl" 
             >
             {error ? (
-                <>Erro ao listar categorias.</>
+                <>Erro ao listar produtos.</>
             ) : (
                 <List
                     className='demo-loadmore-list'

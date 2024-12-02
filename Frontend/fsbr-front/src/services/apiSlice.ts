@@ -5,6 +5,14 @@ import { Product } from "../types/Product";
 export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.API_BASE_URL ?? 'https://localhost:7215'}),
     endpoints: (builder) => ({
+        login: builder.mutation({
+            query: (body) => ({
+                url: '/login',
+                method: 'POST',
+                body,
+            })
+        }),
+
         getCategories: builder.query<Category[], void>({
             query: () => `/api/categories`,
             // providesTags: [`categories`]
@@ -35,7 +43,14 @@ export const apiSlice = createApi({
 
 
         getProducts: builder.query<Product[], void>({
-            query: () => '/api/products'
+            query: () => ({
+                url: '/api/products',
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            }),
         }),
         getProductById: builder.query<Product, number>({
             query: (id) => `/api/products/${id}`
@@ -64,6 +79,7 @@ export const apiSlice = createApi({
 });
 
 export const { 
+    useLoginMutation,
     useGetCategoriesQuery, 
     useGetCategoryByIdQuery, 
     useCreateCategoryMutation,
