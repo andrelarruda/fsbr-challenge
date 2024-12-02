@@ -15,7 +15,7 @@ const CustomLayout: React.FC = () => {
                     <Menu
                         theme='dark'
                         mode='horizontal'
-                        defaultSelectedKeys={['1']}
+                        defaultSelectedKeys={['0']}
                         style={{ flex: 1, minWidth: 0 }}
                     >
                         <Menu.Item key="0">
@@ -27,9 +27,9 @@ const CustomLayout: React.FC = () => {
                         <Menu.Item key="2">
                             <NavLink to='/categories'>Categorias</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="3">
-                            <NavLink to=''>Logout</NavLink> {/*TODO: ajustar para ser botao de logout*/}
-                        </Menu.Item>
+                        {/* <Menu.Item key="3">
+                            <NavLink to=''>Logout</NavLink>
+                        </Menu.Item> */}
                     </Menu>
                 </Header>
                 <Content style={{ 
