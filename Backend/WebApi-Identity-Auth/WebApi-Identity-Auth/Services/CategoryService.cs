@@ -2,6 +2,8 @@
 using WebApi_Identity_Auth.Entities;
 using WebApi_Identity_Auth.Models;
 using WebApi_Identity_Auth.Repositories;
+using FluentValidation.Results;
+using WebApi_Identity_Auth.Validation;
 
 namespace WebApi_Identity_Auth.Services
 {
@@ -28,10 +30,12 @@ namespace WebApi_Identity_Auth.Services
 
         public async Task<Category> Save(CreateCategoryInputModel inputModel)
         {
-            if (inputModel.Name == null || inputModel.Description == null)
+            CategoryValidator validator = new CategoryValidator();
+            ValidationResult results = validator.Validate(inputModel);
+            if (!results.IsValid)
             {
-                // TODO: Add validation
-                throw new Exception("Required fields must be filled.");
+                results.Errors.ForEach(failure => Console.WriteLine($"Property {failure.PropertyName} failed validation. Error was {failure.ErrorMessage}"));
+                throw new Exception("Erro de validação.");
             }
             var iModel = _mapper.Map<Category>(inputModel);
             return await _repository.Save(iModel);

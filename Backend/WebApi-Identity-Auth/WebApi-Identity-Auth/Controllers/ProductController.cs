@@ -9,7 +9,7 @@ namespace WebApi_Identity_Auth.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;

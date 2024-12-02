@@ -9,7 +9,7 @@ namespace WebApi_Identity_Auth.Controllers
 {
     [Route("api/categories")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoryController : ControllerBase
     {
 

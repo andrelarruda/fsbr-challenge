@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi_Identity_Auth.Entities;
 using WebApi_Identity_Auth.Models;
 using WebApi_Identity_Auth.Repositories;
+using WebApi_Identity_Auth.Validation;
+using FluentValidation.Results;
 
 namespace WebApi_Identity_Auth.Services
 {
@@ -44,10 +46,12 @@ namespace WebApi_Identity_Auth.Services
 
         public async Task<Product> Save(CreateProductInputModel inputModel)
         {
-            if (inputModel.Name == null || inputModel.Description == null)
+            ProductValidator validator = new ProductValidator();
+            ValidationResult results = validator.Validate(inputModel);
+            if (!results.IsValid)
             {
-                // TODO: Add validation
-                throw new Exception("Required fields must be filled.");
+                results.Errors.ForEach(failure => Console.WriteLine($"Property {failure.PropertyName} failed validation. Error was {failure.ErrorMessage}"));
+                throw new Exception("Erro de validação.");
             }
 
             var category = await _categoryService.GetById(inputModel.CategoryId);
