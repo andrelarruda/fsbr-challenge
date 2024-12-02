@@ -1,5 +1,24 @@
 # Desafio FSBR
 
+# Descrição
+
+Este projeto é uma aplicação composta por backend e frontend, que implementa um sistema de CRUD (Create, Read, Update, Delete) para gerenciamento de produtos e suas respectivas categorias.
+
+# Features implementadas: 
+
+## Backend
+
+- Banco de dados com LocalDB
+- Autenticação (apenas backend)
+- Validação de dados com Fluent Validation
+
+## Frontend
+
+- RTK Query
+- Ant Design
+- Navegação com react-router-dom
+- Validação com Ant Design
+
 # Para rodar o back end
 
 1. Abra a solution com o Visual Studio 2022.
